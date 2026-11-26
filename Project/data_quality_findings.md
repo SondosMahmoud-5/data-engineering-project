@@ -16,3 +16,7 @@ Different lengths and formats; some length-10 values aren't times at all. Valid 
 
 Duplicate runs: sim_runs.json contains two records for RUN-2025B with the same configuration fields but different created_at values. Detected by checking for repeated run_ids. For the bars merge, I used one RUN-2025B record with created_at excluded, since the other run fields matched.
 
+events.json File:
+Events outside the company's listing period: 3 rows
+A company can't hold an earnings announcement on an exchange before it's listed there, or after it's left. So on those dates, these tickers matched no company valid on the date.
+EV0016 (CELK, 14 Feb) and EV0021 (DOVV, 6 Mar) happened before the company was listed. EV0055 (YARL, 30 May) happened after the company was delisted (30 Apr). Found by matching each event's date to its company's listing period. Rejected as UNKNOWN_SYMBOL.
