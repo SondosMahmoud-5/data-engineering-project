@@ -28,6 +28,10 @@ EV0016 (CELK, 14 Feb) and EV0021 (DOVV, 6 Mar) happened before the company was l
 First we need to make sure that all values have the same Format.
 -After checking, The only difference between the two duplicate rows is the _source_row column, which is expected since it is a unique identifier for each row. All other columns have identical values, indicating that these rows are indeed duplicates in terms of their data content.     
 -We have also noticed that there is only one entry in the "delisting_date" variable, but we decided to keep it for further investigation with other Datasets.
+-The dataset contains 30 securities with complete data for the numeric variables shown. The shares_outstanding variable ranges from 41 million to 891 million shares, with a mean of 425.7 million and a median of 411 million, indicating a relatively balanced distribution. The wide range and high standard deviation suggest substantial variation in company size.
+-The distribution of shares_outstanding shows substantial variation across tickers. **TAVV** has the largest number of outstanding shares (891 million), while the smallest number is for **ROSS** ticker with shares (41 million). This wide range suggests that the dataset contains companies of varying sizes, which may influence subsequent analyses involving price, trading volume, or market value.
+-The shares_outstanding variable shows substantial variation across securities, ranging from 41 million to 891 million shares. The distribution is relatively balanced around a median of 411 million shares, and no significant outliers are observed based on the boxplot analysis.
+-The dataset contains 30 unique securities, each represented by a unique ticker symbol.
 
 2) symbol.history.csv:
 -symbol history dataset includes only 3 entries for 3 different companies in which there is a change that happened.
