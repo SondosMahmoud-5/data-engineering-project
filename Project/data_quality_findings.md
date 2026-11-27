@@ -22,6 +22,18 @@ Events outside the company's listing period: 3 rows
 A company can't hold an earnings announcement on an exchange before it's listed there, or after it's left. So on those dates, these tickers matched no company valid on the date.
 EV0016 (CELK, 14 Feb) and EV0021 (DOVV, 6 Mar) happened before the company was listed. EV0055 (YARL, 30 May) happened after the company was delisted (30 Apr). Found by matching each event's date to its company's listing period. Rejected as UNKNOWN_SYMBOL.
 
+1) symbols.csv:
+-I noticed here that the total entries are 31 while the unique values for the security ID are only 30 , so there must be a duplicate value.
+-The security ID that was duplicated is SEC009, So let's check if it has the same values in all columns or it is a different entry ?
+First we need to make sure that all values have the same Format.
+-After checking, The only difference between the two duplicate rows is the _source_row column, which is expected since it is a unique identifier for each row. All other columns have identical values, indicating that these rows are indeed duplicates in terms of their data content.     
+-We have also noticed that there is only one entry in the "delisting_date" variable, but we decided to keep it for further investigation with other Datasets.
+
+2) symbol.history.csv:
+-symbol history dataset includes only 3 entries for 3 different companies in which there is a change that happened.
+-We matched its format with symbols data set.
+
+3) Bars:
 
 4) exchange_calendar.csv
 - Finding 1: Booleans and dates are text
@@ -70,3 +82,13 @@ EV0016 (CELK, 14 Feb) and EV0021 (DOVV, 6 Mar) happened before the company was l
     - 10,831 rows, no nulls, no duplicate keys, all runs and tickers known, every date a trading day (no 01-20 rows), OHLC valid, no negative values
     - The vendor file's problems are about conventions, not broken rows, so they only show when we compare it with the minute bars
     - Decision: Accept all rows
+-For the Open,High,low and close Prices we can observe the following: Prices vary greatly across securities the range between the min value and max value is very large, Mean value is greater than the Median, indicating a right-skewed distribution, as there are some High values dragging the distribution to the right.
+-The dataset contains 32 unique securities observed across 3 independent simulation runs (RUN-2025A, RUN-2025B, and RUN-2025C) covering the period from January to June 2025.
+-We can also observe that, The median of RUN-2025C is higher than the other two runs, with a wider spread contaning more high price outliers.
+while RUN-2025A and RUN-2025B look quite similar.
+-Based on the above table:
+All 32 tickers are present across the 3 simulation runs. However, the number of observations per ticker varies substantially. While most tickers contain approximately 120-123 daily observations per run, some securities such as ORBT and DOVV contain considerably fewer records, suggesting shorter trading histories or missing data periods.
+-The dataset exhibits varying ticker lifetimes. While several securities are present throughout the entire observation window (123 trading days), others appear only during part of the period. For example, DOVV is present only from 12-May-2025 to 30-Jun-2025 (34 trading days), whereas ORBT is present only from 02-Jan-2025 to 14-Mar-2025 (50 trading days). This suggests that the dataset includes securities entering and leaving the trading universe over time.
+-The analysis reveals considerable variation across securities in both price and trading activity. INDEX is characterized by the highest average closing price and trading volume, whereas the remaining securities exhibit comparatively lower and more clustered values.
+-
+
